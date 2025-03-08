@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URI")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  email    String @unique
+  password String
+
+  refreshTokens Token[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Token {
+  id String @id @default(uuid())
+
+  token     String     @unique
+  type      ETokenType
+  expiresIn DateTime   @map("expires_in")
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("tokens")
+}
+
+enum ETokenType {
+  REFRESH_TOKEN
+
+  @@map("token_types")
+}
+
+model Schedule {
+  id String @id @default(uuid())
+
+  from String
+  to   String
+
+  startTime   DateTime @map("start_time")
+  arrivalTime DateTime @map("arrival_time")
+
+  trainNumber String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("schedules")
+}
