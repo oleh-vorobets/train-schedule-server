@@ -31,10 +31,12 @@ async function bootstrap() {
   //Response extension
   app.use((req: Request, res: Response, next: NextFunction) => {
     res.setCookie = (name: string, value: string, options = {}) => {
+      res.clearCookie(name, { path: '/' });
+
       res.cookie(name, value, {
         httpOnly: true,
         secure: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         maxAge: sevenDays, // 7 days in milliseconds
         path: '/',
         expires: new Date(Date.now() + sevenDays),
