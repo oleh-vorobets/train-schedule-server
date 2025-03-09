@@ -35,7 +35,7 @@ async function bootstrap() {
         sameSite: 'none',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
         path: '/',
-        domain: config.getOrThrow<string>('ALLOWED_ORIGIN'),
+        domain: config.getOrThrow<string>('RAILWAY_PUBLIC_DOMAIN'),
         ...options,
       });
     };
