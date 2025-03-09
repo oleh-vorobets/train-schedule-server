@@ -11,7 +11,7 @@ async function main() {
 
     type ScheduleDataType = Omit<Schedule, 'id' | 'createdAt' | 'updatedAt'>;
 
-    const schedulesData: ScheduleDataType[] = Array.from({ length: 20 }).map(
+    const schedulesData: ScheduleDataType[] = Array.from({ length: 40 }).map(
       () => {
         const startTime = faker.date.future();
         const arrivalTime = new Date(

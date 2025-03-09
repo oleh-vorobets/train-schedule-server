@@ -79,6 +79,10 @@ export class AuthService {
       include: { user: true },
     });
 
+    if (!token) {
+      throw new ForbiddenException('Access denied');
+    }
+
     const { token: hashedRefreshToken } = token;
     const isValidToken = await compare(rt, hashedRefreshToken);
     if (!token.user || !isValidToken) {

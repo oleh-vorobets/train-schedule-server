@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsDate,
   IsNotEmpty,
@@ -26,11 +27,13 @@ export class UpdateScheduleDto {
   @IsNotEmpty()
   @IsDate()
   @IsOptional()
+  @Transform(({ value }) => new Date(value))
   startTime?: Date;
 
   @IsNotEmpty()
   @IsDate()
   @IsOptional()
+  @Transform(({ value }) => new Date(value))
   arrivalTime?: Date;
 
   @IsNotEmpty()
