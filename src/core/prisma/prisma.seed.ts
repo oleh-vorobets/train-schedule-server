@@ -5,7 +5,7 @@ import { PrismaClient, Schedule } from '../../../prisma/generated';
 
 const prisma = new PrismaClient();
 
-async function main() {
+async function seeder() {
   try {
     Logger.log('Started seeding DB');
 
@@ -42,4 +42,4 @@ async function main() {
   }
 }
 
-main();
+seeder();
