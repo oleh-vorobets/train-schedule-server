@@ -34,11 +34,10 @@ async function bootstrap() {
       res.cookie(name, value, {
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: 'lax',
         maxAge: sevenDays, // 7 days in milliseconds
         path: '/',
         expires: new Date(Date.now() + sevenDays),
-        partitioned: true,
         ...options,
       });
     };
