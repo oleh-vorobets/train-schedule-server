@@ -24,18 +24,15 @@ async function bootstrap() {
   app.use(helmet());
   app.setGlobalPrefix('api/v1');
 
-  console.log(
-    '---SECURE: ',
-    config.getOrThrow<string>('NODE_ENV') === 'production',
-  );
-
   //Response extension
   app.use((req: Request, res: Response, next: NextFunction) => {
     res.setCookie = (name: string, value: string, options = {}) => {
       res.cookie(name, value, {
         httpOnly: true,
-        secure: config.getOrThrow<string>('NODE_ENV') === 'production',
+        secure: true,
         sameSite: 'none',
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+        path: '/',
         ...options,
       });
     };
