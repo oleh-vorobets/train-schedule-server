@@ -37,9 +37,7 @@ async function bootstrap() {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
-        maxAge: sevenDays, // 7 days in milliseconds
         path: '/',
-        expires: new Date(Date.now() + sevenDays),
         ...options,
       });
     };
