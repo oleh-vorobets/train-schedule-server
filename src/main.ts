@@ -30,6 +30,8 @@ async function bootstrap() {
 
   //Response extension
   app.use((req: Request, res: Response, next: NextFunction) => {
+    const domain = req.headers.host?.split(':')[0];
+
     res.setCookie = (name: string, value: string, options = {}) => {
       res.cookie(name, value, {
         httpOnly: true,
@@ -37,7 +39,7 @@ async function bootstrap() {
         sameSite: 'none',
         maxAge: sevenDays, // 7 days in milliseconds
         path: '/',
-        domain: 'train-schedule-client.vercel.app',
+        domain: domain,
         expires: new Date(Date.now() + sevenDays),
         ...options,
       });
