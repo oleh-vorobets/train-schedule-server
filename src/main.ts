@@ -30,8 +30,8 @@ async function bootstrap() {
   app.use((req: Request, res: Response, next: NextFunction) => {
     res.setCookie = (name: string, value: string, options = {}) => {
       res.cookie(name, value, {
-        httpOnly: true,
-        secure: true,
+        httpOnly: false,
+        secure: false,
         sameSite: 'none',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
         path: '/',
