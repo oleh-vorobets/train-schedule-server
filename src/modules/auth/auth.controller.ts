@@ -44,7 +44,7 @@ export class AuthController {
     const { accessToken, refresh } = await this.authService.signin(signInDto);
 
     this.setRefreshToken(response, refresh);
-    return { accessToken };
+    return { accessToken, refreshToken: refresh };
   }
 
   @HttpCode(HttpStatus.CREATED)
@@ -57,7 +57,7 @@ export class AuthController {
     const { accessToken, refresh } = await this.authService.signup(signUpDto);
 
     this.setRefreshToken(response, refresh);
-    return { accessToken };
+    return { accessToken, refreshToken: refresh };
   }
 
   @HttpCode(HttpStatus.OK)
@@ -76,7 +76,7 @@ export class AuthController {
     );
 
     this.setRefreshToken(response, refresh);
-    return { accessToken };
+    return { accessToken, refreshToken: refresh };
   }
 
   @Auth()
@@ -89,7 +89,7 @@ export class AuthController {
     await this.authService.logout(req.cookies[this.rtName]);
 
     this.clearRefreshToken(response);
-    return true;
+    return { accessToken: '', refreshToken: '' };
   }
 
   private setRefreshToken(response: Response, token: RefreshTokenCookie) {
