@@ -44,7 +44,7 @@ export class AuthController {
     const { accessToken, refresh } = await this.authService.signin(signInDto);
 
     this.setRefreshToken(response, refresh);
-    return { accessToken, refreshToken: refresh };
+    return { accessToken, refreshToken: JSON.stringify(refresh) };
   }
 
   @HttpCode(HttpStatus.CREATED)
@@ -57,7 +57,7 @@ export class AuthController {
     const { accessToken, refresh } = await this.authService.signup(signUpDto);
 
     this.setRefreshToken(response, refresh);
-    return { accessToken, refreshToken: refresh };
+    return { accessToken, refreshToken: JSON.stringify(refresh) };
   }
 
   @HttpCode(HttpStatus.OK)
@@ -76,7 +76,7 @@ export class AuthController {
     );
 
     this.setRefreshToken(response, refresh);
-    return { accessToken, refreshToken: refresh };
+    return { accessToken, refreshToken: JSON.stringify(refresh) };
   }
 
   @Auth()
