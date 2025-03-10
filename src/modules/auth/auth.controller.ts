@@ -14,6 +14,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
 import { Auth } from 'src/shared/decorators/auth.decorator';
+import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { PasswordMatchPipe } from 'src/shared/pipes/password-match.pipe';
 import { parseDuration } from 'src/shared/utils/parse-duration.util';
 
@@ -95,6 +96,13 @@ export class AuthController {
 
     this.clearRefreshToken(response);
     return { accessToken: '', refreshToken: '' };
+  }
+
+  @Auth()
+  @Get('me')
+  @HttpCode(HttpStatus.OK)
+  async me(@CurrentUser('id') id: string) {
+    return this.authService.me(id);
   }
 
   private setRefreshToken(response: Response, token: RefreshTokenCookie) {

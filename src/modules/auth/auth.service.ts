@@ -80,13 +80,13 @@ export class AuthService {
     });
 
     if (!token) {
-      throw new ForbiddenException('Access denied');
+      throw new UnauthorizedException('Access denied');
     }
 
     const { token: hashedRefreshToken } = token;
     const isValidToken = await compare(rt, hashedRefreshToken);
     if (!token.user || !isValidToken) {
-      throw new ForbiddenException('Access denied');
+      throw new UnauthorizedException('Access denied');
     }
 
     // Such a hard chunk of code for optimizing request time delay.
@@ -132,6 +132,19 @@ export class AuthService {
       });
     }
     return true;
+  }
+
+  async me(id: string) {
+    if (id) {
+      const user = await this.prismaService.user.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      return user;
+    }
+    return null;
   }
 
   private async generateTokens(userId: string, email: string) {
