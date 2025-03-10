@@ -27,11 +27,11 @@ export class AuthService {
   async signin({ email, password }: SignInDto): Promise<Tokens> {
     const user = await this.prismaService.user.findUnique({ where: { email } });
     if (!user) {
-      throw new NotFoundException('User with such email is not found');
+      throw new NotFoundException('User with such email is not found.');
     }
 
     if (!(await compare(password, user.password))) {
-      throw new UnauthorizedException('Invalid password');
+      throw new BadRequestException('Invalid email or password. Try again.');
     }
 
     const tokens = await this.generateTokens(user.id, user.email);
@@ -50,7 +50,7 @@ export class AuthService {
   async signup({ email, password }: SignUpDto): Promise<Tokens> {
     const user = await this.prismaService.user.findUnique({ where: { email } });
     if (user) {
-      throw new BadRequestException('User is already registered');
+      throw new BadRequestException('User is already registered.');
     }
 
     const hashedPassword = await this.hashData(password);
