@@ -31,8 +31,8 @@ async function bootstrap() {
     res.setCookie = (name: string, value: string, options = {}) => {
       res.cookie(name, value, {
         httpOnly: true,
-        secure: true,
-        sameSite: 'none',
+        secure: false,
+        sameSite: 'strict',
         ...options,
       });
     };
