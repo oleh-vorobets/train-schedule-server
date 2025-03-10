@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -7,6 +8,7 @@ import {
   Post,
   Req,
   Res,
+  UnauthorizedException,
   UsePipes,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -66,6 +68,9 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
+    if (!req.cookies[this.rtName])
+      throw new UnauthorizedException('Cookie was not found');
+
     const { id, refreshToken } = JSON.parse(
       req.cookies[this.rtName],
     ) as RefreshTokenCookie;
