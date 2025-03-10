@@ -85,7 +85,6 @@ export class AuthController {
     return { accessToken, refreshToken: JSON.stringify(refresh) };
   }
 
-  @Auth()
   @Get('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(
