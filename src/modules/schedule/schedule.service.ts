@@ -44,14 +44,22 @@ export class ScheduleService {
 
   async create(createScheduleDto: CreateScheduleDto) {
     return this.prismaService.schedule.create({
-      data: createScheduleDto,
+      data: {
+        ...createScheduleDto,
+        startTime: new Date(createScheduleDto.startTime),
+        arrivalTime: new Date(createScheduleDto.arrivalTime),
+      },
     });
   }
 
   async update(id: string, updateScheduleDto: UpdateScheduleDto) {
     const schedule = await this.prismaService.schedule.update({
       where: { id },
-      data: { ...updateScheduleDto },
+      data: {
+        ...updateScheduleDto,
+        startTime: new Date(updateScheduleDto.startTime),
+        arrivalTime: new Date(updateScheduleDto.arrivalTime),
+      },
     });
     if (!schedule) {
       throw new NotFoundException('Schedule not found');
