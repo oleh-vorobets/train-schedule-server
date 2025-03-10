@@ -26,18 +26,13 @@ async function bootstrap() {
   app.use(helmet());
   app.setGlobalPrefix('api/v1');
 
-  const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
   //Response extension
   app.use((req: Request, res: Response, next: NextFunction) => {
     res.setCookie = (name: string, value: string, options = {}) => {
-      res.clearCookie(name, { path: '/' });
-
       res.cookie(name, value, {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
-        path: '/',
         ...options,
       });
     };
